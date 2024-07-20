@@ -42,6 +42,11 @@ export const JBNumberInput = forwardRef((props: JBNumberInputProps, ref) => {
       element?.current?.setNumberFieldParameter(props.numberFieldParameter);
     }
   }, [props.numberFieldParameter]);
+  useEffect(() => {
+    if (element.current && typeof props.showControlButton == "boolean") {
+      element.current.showControlButton = props.showControlButton;
+    }
+  }, [props.showControlButton]);
   return (
     <jb-number-input placeholder={props.placeholder} ref={element} class={props.className} label={props.label} message={props.message}>
       {props.children}
@@ -51,6 +56,7 @@ export const JBNumberInput = forwardRef((props: JBNumberInputProps, ref) => {
 export type JBNumberInputProps = JBInputProps & {
     // usePersianNumber?: boolean,
     numberFieldParameter?: NumberFieldParameterInput,
+    showControlButton:boolean
 }
 JBNumberInput.displayName = "JBNumberInput";
 
