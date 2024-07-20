@@ -1,10 +1,10 @@
-import React ,{ useRef, useEffect, useImperativeHandle, useState, useCallback, DetailedHTMLProps, HTMLAttributes,forwardRef } from 'react';
+import React ,{ useRef, useEffect, useImperativeHandle, useState, DetailedHTMLProps, HTMLAttributes,forwardRef } from 'react';
 import 'jb-number-input';
-import { useEvent } from '../../../common/hooks/use-event';
-import {type ValidationItem} from '../../../common/scripts/validation/validation-helper-types';
 // eslint-disable-next-line no-duplicate-imports
 import {JBNumberInputWebComponent } from 'jb-number-input';
-import {type ValidationValue , type JBInputEventType} from 'jb-input/types';
+import {type Props as JBInputProps} from 'jb-input-react';
+import {useJBInputAttribute} from 'jb-input-react/lib/attributes-hook';
+import {useJBInputEvents} from 'jb-input-react/lib/events-hook';
 import { type NumberFieldParameterInput} from 'jb-number-input/types';
 
 declare global {
@@ -35,120 +35,22 @@ export const JBNumberInput = forwardRef((props: JBNumberInputProps, ref) => {
   useEffect(() => {
     refChangeCountSetter(refChangeCount + 1);
   }, [element.current]);
-  const onChange = useCallback((e: JBInputEventType<Event>) => {
-    if (typeof props.onChange === "function") {
-      props.onChange(e);
-    }
-  }, [props.onChange]);
-  const onKeydown = useCallback((e:JBInputEventType<KeyboardEvent>) => {
-    if (typeof props.onKeydown === "function") {
-      props.onKeydown(e);
-    }
-  }, [props.onKeydown]);
-  const onKeyup = useCallback((e:JBInputEventType<KeyboardEvent>) => {
-    if (typeof props.onKeyup === "function") {
-      props.onKeyup(e);
-    }
-  }, [props.onKeyup]);
-
-  const onEnter = useCallback((e:JBInputEventType<CustomEvent>) => {
-    if (props.onEnter) {
-      props.onEnter(e);
-    }
-  }, [props.onEnter]);
-  const onFocus = useCallback((e: JBInputEventType<FocusEvent>) => {
-    if (props.onFocus && e instanceof FocusEvent) {
-      props.onFocus(e);
-    }
-  }, [props.onFocus]);
-  const onBlur = useCallback((e: JBInputEventType<FocusEvent>) => {
-    if (props.onBlur && e instanceof FocusEvent) {
-      props.onBlur(e);
-    }
-  }, [props.onBlur]);
-  const onInput = useCallback((e: JBInputEventType<InputEvent>) => {
-    if (typeof props.onInput == 'function' && e instanceof InputEvent) {
-      props.onInput(e);
-    }
-  }, [props.onInput]);
-  const onBeforeInput = useCallback((e: JBInputEventType<InputEvent>) => {
-    if (typeof props.onBeforeinput == 'function' && e instanceof InputEvent) {
-      props.onBeforeinput(e);
-    }
-  }, [props.onBeforeinput]);
-  useEffect(() => {
-    let value = props.value;
-    if (props.value == null || props.value === undefined) {
-      value = '';
-    }
-    if (element && element.current && element.current) {
-      element.current.value = value?.toString() || "";
-    }
-  }, [props.value]);
-  useEffect(() => {
-    if (props.type) {
-      element?.current?.setAttribute('type', props.type);
-    }
-  }, [props.type]);
-  useEffect(() => {
-    if (element && element.current) {
-      element.current.validation.list = props.validationList || [];
-    }
-  }, [props.validationList]);
+  useJBInputAttribute(element,props);
+  useJBInputEvents(element,props);
   useEffect(() => {
     if (typeof props.numberFieldParameter == "object") {
       element?.current?.setNumberFieldParameter(props.numberFieldParameter);
     }
   }, [props.numberFieldParameter]);
-  useEffect(() => {
-    if (typeof props.disabled == "boolean") {
-      element?.current?.setAttribute('disabled', `${props.disabled}`);
-    }
-  }, [props.disabled]);
-  useEffect(() => {
-    if (props.inputmode) {
-      element.current?.setAttribute('inputmode', props.inputmode);
-    } else {
-      element.current?.removeAttribute('inputmode');
-    }
-  }
-  , [props.inputmode]);
-  useEvent(element.current, 'change', onChange);
-  useEvent(element.current, 'keydown', onKeydown);
-  useEvent(element.current, 'keyup', onKeyup);
-  useEvent(element.current, 'focus', onFocus);
-  useEvent(element.current, 'blur', onBlur);
-  useEvent(element.current, 'enter', onEnter);
-  useEvent(element.current, 'input', onInput);
-  useEvent(element.current, 'beforeinput', onBeforeInput);
   return (
     <jb-number-input placeholder={props.placeholder} ref={element} class={props.className} label={props.label} message={props.message}>
       {props.children}
     </jb-number-input>
   );
 });
-export type JBNumberInputProps = {
-    label?: string,
-    name?: string,
-    className?: string,
-    message?: string,
-    value: string | number | null | undefined,
-    validationList?: ValidationItem<ValidationValue>[],
+export type JBNumberInputProps = JBInputProps & {
     // usePersianNumber?: boolean,
-    type?: string,
-    onEnter?: (e: JBInputEventType<CustomEvent>) => void,
-    onInput?: (e: JBInputEventType<InputEvent>) => void,
-    onBeforeinput?: (e: JBInputEventType<InputEvent>) => void,
-    onFocus?: (e: JBInputEventType<FocusEvent>) => void,
-    onBlur?: (e: JBInputEventType<FocusEvent>) => void,
-    onKeyup?: (e: JBInputEventType<KeyboardEvent>) => void,
-    onKeydown?: (e: JBInputEventType<KeyboardEvent>) => void,
-    onChange?: (e: JBInputEventType<Event>) => void,
-    placeholder?: string,
     numberFieldParameter?: NumberFieldParameterInput,
-    disabled?: boolean,
-    inputmode?: string,
-    children?: React.ReactNode | React.ReactNode[],
 }
 JBNumberInput.displayName = "JBNumberInput";
 
