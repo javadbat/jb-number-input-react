@@ -31,6 +31,6 @@
 		"url": "git@github.com:javadbat/jb-payment-input-react.git"
   },
   "dependencies": {
-    "jb-payment-input": ">=2.2.0"
+    "jb-number-input": ">=2.2.0"
   }
 }
