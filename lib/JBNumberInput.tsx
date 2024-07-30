@@ -2,10 +2,7 @@ import React ,{ useRef, useEffect, useImperativeHandle, useState, DetailedHTMLPr
 import 'jb-number-input';
 // eslint-disable-next-line no-duplicate-imports
 import {JBNumberInputWebComponent } from 'jb-number-input';
-import {type Props as JBInputProps} from 'jb-input-react';
-import {useJBInputAttribute} from 'jb-input-react/lib/attributes-hook';
-import {useJBInputEvents} from 'jb-input-react/lib/events-hook';
-import { type NumberFieldParameterInput} from 'jb-number-input/types';
+import {type Props as JBInputProps, useJBInputAttribute, useJBInputEvents} from 'jb-input-react';
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -38,25 +35,66 @@ export const JBNumberInput = forwardRef((props: JBNumberInputProps, ref) => {
   useJBInputAttribute(element,props);
   useJBInputEvents(element,props);
   useEffect(() => {
-    if (typeof props.numberFieldParameter == "object") {
-      element?.current?.setNumberFieldParameter(props.numberFieldParameter);
+    if(element?.current){
+      element.current.minValue = props.minValue;
     }
-  }, [props.numberFieldParameter]);
+  }, [props.minValue]);
+  useEffect(() => {
+    if(element.current){
+      element.current.maxValue = props.maxValue;
+    }
+  }, [props.maxValue]);
+  useEffect(() => {
+    if(element.current && props.acceptNegative !== undefined){
+      element.current.acceptNegative = props.acceptNegative;
+    }
+  }, [props.acceptNegative]);
+  useEffect(() => {
+    if(element.current){
+      element.current.decimalPrecision = props.decimalPrecision;
+    }
+  }, [props.decimalPrecision]);
   useEffect(() => {
     if (element.current && typeof props.showControlButton == "boolean") {
       element.current.showControlButton = props.showControlButton;
     }
   }, [props.showControlButton]);
+  useEffect(() => {
+    if (element.current && typeof props.showThousandSeparator == "boolean") {
+      element.current.showThousandSeparator = props.showThousandSeparator;
+    }
+  }, [props.showThousandSeparator]);
+  useEffect(() => {
+    if (element.current && typeof props.thousandSeparator == "string") {
+      element.current.thousandSeparator = props.thousandSeparator;
+    }
+  },[props.thousandSeparator]);
+  useEffect(() => {
+    if (element.current && typeof props.step == "number") {
+      element.current.step = props.step;
+    }
+  }, [props.step]);
+  useEffect(() => {
+    if (element.current && typeof props.showPersianNumber == "boolean") {
+      element.current.showPersianNumber = props.showPersianNumber;
+    }
+  }, [props.showPersianNumber]);
   return (
-    <jb-number-input placeholder={props.placeholder} ref={element} class={props.className} label={props.label} message={props.message}>
+    <jb-number-input ref={element} class={props.className}>
       {props.children}
     </jb-number-input>
   );
 });
 export type JBNumberInputProps = JBInputProps & {
-    // usePersianNumber?: boolean,
-    numberFieldParameter?: NumberFieldParameterInput,
-    showControlButton:boolean
+    minValue?:number,
+    maxValue?:number,
+    acceptNegative?:boolean,
+    decimalPrecision?:number,
+    showThousandSeparator?:boolean,
+    thousandSeparator?:string,
+    step?:number,
+    showPersianNumber?:boolean,
+    showControlButton?:boolean
 }
 JBNumberInput.displayName = "JBNumberInput";
 
