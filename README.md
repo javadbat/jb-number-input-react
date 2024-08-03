@@ -1,112 +1,90 @@
-# JBPaymentInput React component
+# jb-number-input
 
-this component is React.js wrapper for [jb-payment-input](https://www.npmjs.com/package/jb-payment-input) web component
+this is a superset component on [jb-number-input](https://github.com/javadbat/jb-number-input) just for react.
+it's also use [jb-input-react](https://github.com/javadbat/jb-input-react) for standard input props and styles
+Demo: [stackblitz](https://stackblitz.com/edit/jb-number-input-react?file=src%2FApp.tsx) 
+## instructions
 
-payment info input `react component` with this benefit:
+### install
 
-- easy to add custom regex or function validation.
+#### using npm
 
-- multiple validation with different message.
-
-- support both RTL and LTR.
-
-- add label and message in UX friendly format.
-
-- customizable ui with css variable so you can have multiple style in different scope of your app.
-
-- support both card number and shaba number
-
-## install
-
-### using npm
-
-``` command
-npm i jb-payment-input-react
+1- install npm package
+```cmd
+npm i jb-number-input-react
 ```
-in your jsx file
+
+2- import module and use it
+
+```jsx
+import {JBNumberInput} from 'jb-number-input-react';
+
+<JBNumberInput label="number:" message="subtitle of input box"></JBNumberInput>
+
+```
+### get/set value
+
 ```js
-import {JBPaymentInput} from 'jb-payment-input-react';
+const [value,setValue] = useState("");
+<JBNumberInput value={value} onChange={(e)=>setValue(e.target.value)}></JBNumberInput>
 ```
-``` jsx
-<JBPaymentInput  label="card number" inputType="CARD_NUMBER"></JBPaymentInput>
-<JBPaymentInput  label="shaba number" inputType="SHABA_NUMBER"></JBPaymentInput>
-```
+### Config Number parameters
 
+if you want to control which number user may input, ex: you may want to let user input negative number or add min & max boundary or limit decimal precision. for doing so you can set number field parameter to jb-number-input.    
 
-## events
-- onChange
-```jsx 
-    <JBPaymentInput onChange={(event) => console.log(event.target.value)}></JBPaymentInput>
-```
-- onKeyUp
-```jsx 
-    <JBPaymentInput onKeyUp={(event) => console.log(event.target.value)}></JBPaymentInput>
-```
-- onEnter
 ```jsx
-    //when user press Enter button
-    <JBPaymentInput onEnter={(event) => console.log(event.target.value)}></JBPaymentInput>
-```
-- onKeydown
-```jsx 
-    <JBPaymentInput onKeydown={(event) => console.log(event.target.value)}></JBPaymentInput>
-```
-- onFocus
-```jsx 
-    <JBPaymentInput onFocus={(event) => console.log(event.target.value)}></JBPaymentInput>
-```
-- onBlur
-```jsx 
-    <JBPaymentInput onBlur={(event) => console.log(event.target.value)}></JBPaymentInput>
-```
+    <JBNumberInput
+        //how many number you want to + or  - on user press buttons or use arrow keys default is 1
+        step={100}
+        // how many decimal input accept default is infinity
+        decimalPrecision={2}
+        // what char replaced to input if user paste some illegal value default is '' (empty string)
+        invalidNumberReplacement={'0'}
+        // separate every 3 number with comma like 1000000 => 1,000,000
+        showThousandSeparator={false}
+        // which char we use to separate thousand number
+        thousandSeparator=','
+        //can input accept negative number or not
+        acceptNegative={true}
+        // max number value user can input. if user input bigger number it will be set to max
+        maxValue= {1000}
+        //min number value user can input. if user input smaller number it will be set to this value.
+        minValue = {1}
+        // will show persian number instead of english number in output but original input value remain in english char
+        //if true and user type 123 and see ۱۲۳ but inputtedDom.value will be 123
+        showPersianNumber={false}
+    ></JBNumberInput>
+  const numberInput = document.getElementByTagName('jb-number-input')
 
-
-
-## set validation
-
-you can set validation to your input by creating a validationList array and passing in to validationList props:
-
-``` javascript
-    const validationList = [
-        {
-            validator: /.{3}/g,
-            message: 'عنوان حداقل باید سه کاکتر طول داشته باشد'
-        },
-        #you can use function as a validator too
-        {
-            validator: (inputedText)=>{return inputedText == "سلام"},
-            message: 'شما تنها میتوانید عبارت سلام را وارد کنید'
-        },
-    ]
-```
-```jsx
-    <JBPaymentInput validationList={validationList}></JBPaymentInput>
 ```
 
-## check validation
-
-you can check if an input value meet your validation standad by creating a ref of the element using `React.createRef()`.
-```javascript
-    const elementRef = React.createRef();
-    const isValid = elementRef.current.triggerInputValidation(true).isAllValid;
-```
-if `isValid` is `true` the value of input is valid.
-
-### separator (devider) string
-payment input by default use space to separate part of card number or shaba number. for example it will show `1234123412341234` as `1234 1234 1234 1234` but you can change it to what char or even string you want for eample devide it by `-` and you will see `1234-1234-1234-1234`.    
-to make this happen you just have to set `separator` prop in jsx.
-```html
-<jbPaymentInput separator="-"></jbPaymentInput>
-```
-
-## other props
-|props name | description        |
-| --------- | ------------------ |
-| disabled	| disable the input  |
-
-
-## set custom style
+### set custom style
 
 in some cases in your project you need to change default style of web-component for example you need zero margin or different border-radius and etc.    
 if you want to set a custom style to this web-component all you need is to set css variable in parent scope of web-component.
-since jb-payment-input use jb-input underneath, read [jb-input](https://github.com/javadbat/jb-input) custom style list                                                      |
+since jb-number-input use jb-input underneath, read [jb-input](https://github.com/javadbat/jb-input) custom style list.
+
+| variable                                       | description |
+|------------------------------------------------|-------------|
+| --jb-number-input-input-direction              | number input is ltr by default even in rtl page.so you should override it by this variable if you want it rtl or inherit |
+| --jb-number-input-button-width                 | |
+| --jb-number-input-increase-button-bg           | |
+| --jb-number-input-decrease-button-bg           | |
+| --jb-number-input-increase-button-border       | |
+| --jb-number-input-decrease-button-border       | |
+| --jb-number-input-increase-button-border-radius| |
+| --jb-number-input-decrease-button-border-radius| |
+| --jb-number-input-increase-button-color        | |
+| --jb-number-input-decrease-button-color        | |
+| --jb-number-input-increase-button-color-hover  | |
+| --jb-number-input-decrease-button-color-hover  | |
+
+### control Buttons
+you can add `+` and `-` button into your box element for easier access to change the number with just simple click or touch.
+if you want to add this buttons you just have to set `showControlButton` of component:
+
+```jsx
+<JBNumberInput showControlButton={true}></JBNumberInput>
+```
+after that if user click on the `+` or `-` value will increase or decrease base on the step you set in `step`(default is 1).    
+click on `+` `-` button will call `onChange` event.
