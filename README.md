@@ -1,8 +1,12 @@
 # jb-number-input
 
 this is a superset component on [jb-number-input](https://github.com/javadbat/jb-number-input) just for react.
-it's also use [jb-input-react](https://github.com/javadbat/jb-input-react) for standard input props and styles
-Demo: [stackblitz](https://stackblitz.com/edit/jb-number-input-react?file=src%2FApp.tsx) 
+it's also use [jb-input-react](https://github.com/javadbat/jb-input-react) for standard input props and styles    
+
+Demo: [codeSandbox preview](https://3f63dj.csb.app/samples/jb-number-input) for just see the demo and [codeSandbox editor](https://codesandbox.io/p/sandbox/jb-design-system-3f63dj?file=%2Fsrc%2Fsamples%2FJBNumberInput.tsx) if you want to see and play with code    
+
+Demo: [stackblitz](https://stackblitz.com/edit/jb-number-input-react?file=src%2FApp.tsx)    
+
 ## instructions
 
 ### install
@@ -88,3 +92,11 @@ if you want to add this buttons you just have to set `showControlButton` of comp
 ```
 after that if user click on the `+` or `-` value will increase or decrease base on the step you set in `step`(default is 1).    
 click on `+` `-` button will call `onChange` event.
+
+## Other Related Docs:
+
+- see [jb-number-input](https://github.com/javadbat/jb-number-input) if you want to use this component as a pure-js web-component
+
+- see [All JB Design system Component List](https://github.com/javadbat/design-system/blob/master/docs/component-list.md) for more components
+
+- use [Contribution Guide](https://github.com/javadbat/design-system/blob/master/docs/contribution-guide.md) if you want to contribute in this component.

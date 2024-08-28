@@ -1,7 +1,7 @@
-import React ,{ useRef, useEffect, useImperativeHandle, useState, DetailedHTMLProps, HTMLAttributes,forwardRef } from 'react';
+import React ,{ useRef, useEffect, useImperativeHandle, useState, type DetailedHTMLProps, type HTMLAttributes,forwardRef } from 'react';
 import 'jb-number-input';
 // eslint-disable-next-line no-duplicate-imports
-import {JBNumberInputWebComponent } from 'jb-number-input';
+import {type JBNumberInputWebComponent } from 'jb-number-input';
 import {type Props as JBInputProps, useJBInputAttribute, useJBInputEvents} from 'jb-input-react';
 
 declare global {
