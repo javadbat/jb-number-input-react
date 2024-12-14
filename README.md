@@ -1,5 +1,8 @@
 # jb-number-input
 
+> [!WARNING]  
+> this package is deprecated and moved to [jb-number-input/react](https://github.com/javadbat/jb-number-input/tree/main/react)
+
 this is a superset component on [jb-number-input](https://github.com/javadbat/jb-number-input) just for react.
 it's also use [jb-input-react](https://github.com/javadbat/jb-input-react) for standard input props and styles    
 
